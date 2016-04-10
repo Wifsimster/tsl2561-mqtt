@@ -6,6 +6,11 @@ This LUA script is for ESP8266 hardware.
 
 MQTT client publising TSL2561 data to a MQTT broker each time data changes.
 
+##Files
+* ``config.lua``: Configuration variables
+* ``init.lua``: Connect to wifi AP and then execute main.lua file
+* ``main.lua``: Main file
+
 ## Principle
 
 1. Connect to a wifi AP
