@@ -1,8 +1,5 @@
 require('config')
 
-SDA_PIN = 3 -- GPIO_0
-SCL_PIN = 4 -- GPIO_2
-
 function readLux()
     tsl2561 = require("tsl2561")
     tsl2561.init(SDA_PIN, SCL_PIN)    
@@ -11,7 +8,7 @@ function readLux()
     rst["_0"] = ch0
     rst["_1"] = ch1    
     tsl2561 = nil
-    package.loaded["tsl2561"]=nil    
+    package.loaded["tsl2561"] = nil    
     return rst
 end
 
@@ -30,17 +27,19 @@ tmr.alarm(2, 1000, 1, function()
         LUX_1 = tonumber(readLux()._1)
         
         -- First send data
-        DATA = '{"lux_0":"'..LUX_0..'","lux_1":"'..LUX_1..'"}'
+        DATA = '{"mac":"'..wifi.sta.getmac()..'", "ip":"'..wifi.sta.getip()..'",'
+        DATA = DATA..'"lux_0":"'..LUX_0..'","lux_1":"'..LUX_1..'"}'
         m:publish(TOPIC, DATA, 0, 0, function(conn)
             print(CLIENT_ID.." sending data: "..DATA.." to "..TOPIC)
         end)
         
         -- Check every 5s for values change
-        tmr.alarm(1, 5000, 1, function()
+        tmr.alarm(1, REFRESH_RATE, 1, function()
             TMP_LUX_0 = tonumber(readLux()._0)
             TMP_LUX_1 = tonumber(readLux()._1)
             if(LUX_0 ~= TMP_LUX_0 or LUX_1 ~= TMP_LUX_1) then
-                DATA = '{"lux_0":"'..TMP_LUX_0..'","lux_1":"'..TMP_LUX_1..'"}'
+                DATA = '{"mac":"'..wifi.sta.getmac()..'", "ip":"'..wifi.sta.getip()..'",'
+                DATA = DATA..'"lux_0":"'..TMP_LUX_0..'","lux_1":"'..TMP_LUX_1..'"}'
                 -- Publish a message (QoS = 0, retain = 0)       
                 m:publish(TOPIC, DATA, 0, 0, function(conn)
                     print(CLIENT_ID.." sending data: "..DATA.." to "..TOPIC)
