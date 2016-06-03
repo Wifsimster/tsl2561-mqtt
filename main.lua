@@ -18,6 +18,10 @@ end
 -- Init client with keepalive timer 120sec
 m = mqtt.Client(CLIENT_ID, 120, "", "")
 
+ip = wifi.sta.getip()
+
+m:lwt("/offline", '{"message":"'..CLIENT_ID..'", "topic":"'..TOPIC..'", "ip":"'..ip..'"}', 0, 0)
+
 -- Sync to NTP server
 ntp.sync()
 
@@ -28,7 +32,7 @@ m:connect(BROKER_IP, BROKER_PORT, 0, 1, function(conn)
         data = readLux()
         LUX_0 = tonumber(data._0)
         LUX_1 = tonumber(data._1)
-        DATA = '{"mac":"'..wifi.sta.getmac()..'","ip":"'..wifi.sta.getip()..'",'
+        DATA = '{"mac":"'..wifi.sta.getmac()..'","ip":"'..ip..'",'
         DATA = DATA..'"date":"'..ntp.date()..'","time":"'..ntp.time()..'",'
         DATA = DATA..'"lux_0":"'..LUX_0..'","lux_1":"'..LUX_1..'"}'
         -- Publish a message (QoS = 0, retain = 0)       
