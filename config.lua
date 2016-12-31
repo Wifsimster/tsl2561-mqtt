@@ -11,6 +11,3 @@ REFRESH_RATE = 300000 -- 5 min
 -- GPIO
 SDA_PIN = 3 -- GPIO_0
 SCL_PIN = 4 -- GPIO_2
-
--- LOCATION
-LOCATION = "livingroom"
