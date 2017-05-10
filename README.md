@@ -1,10 +1,10 @@
-# Send TSL2561 data through an ESP8266 to a MQTT broker
+# TSL2561
 
-This LUA script is for ESP8266 hardware.
+> This LUA script is for ESP8266 hardware.
 
 ## Description
 
-MQTT client publising TSL2561 data to a MQTT broker each time data changes.
+MQTT client publising TSL2561 data to a MQTT broker each time data changes. :bulb:
 
 ## Files
 * ``config.lua``: Configuration variables
