@@ -4,7 +4,7 @@
 
 ## Description
 
-MQTT client publising TSL2561 data to a MQTT broker each time data changes. :bulb:
+MQTT client publising TSL2561 data to a MQTT broker each time data changes. :low_brightness:
 
 ## Files
 * ``config.lua``: Configuration variables
